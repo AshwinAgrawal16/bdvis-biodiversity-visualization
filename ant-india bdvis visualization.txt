@@ -1,0 +1,22 @@
+install.packages("bdvis")
+install.packages("rinat")
+library(rinat)
+library(bdvis)
+
+inat1<-get_inat_obs_project("antindia")
+
+inat1=format_bdvis(inat1,Scientific_name="Scientific.name")
+colnames(inat1)[which(names(inat1) == "Observed.on")] <- "Date_collected"
+inat1=getcellid(inat1)
+
+bdsummary(inat1)
+
+tempolar(inat1, color="green", title="iNaturalist daily",
+                     plottype="r", timescale="d")
+
+tempolar(inat1, color="blue", title="iNaturalist weekly",
+                  plottype="p", timescale="w")
+tempolar(inat1, color="red", title="iNaturalist monthly",
+                 plottype="r", timescale="m")
+
+chronohorogram(inat1)
